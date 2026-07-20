@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>LLL PDF Toolkit — Merge, Split, Compress &amp; Convert PDFs</title>
+  <meta name="description" content="Free PDF toolkit: merge, split, rotate, compress, lock, unlock, delete, rearrange and extract pages, plus PDF/Word/Excel/PowerPoint conversion. Runs entirely in your browser." />
+  <link rel="icon" type="image/svg+xml" href="assets/lllLogo.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ============== Icon sprite ============== -->
+<svg class="hidden" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="icon-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4 7 7 0 0 0 20 14.5Z"/></symbol>
+    <symbol id="icon-upload-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96 5.5 5.5 0 0 1 10.8-1.5A4.5 4.5 0 0 1 17 18"/><path d="M12 11v8M9 14l3-3 3 3"/></symbol>
+    <symbol id="icon-file-pdf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v4h4"/><path d="M9 15h1.3a1.3 1.3 0 1 0 0-2.6H9V17"/><path d="M13 12.4v4.6h1.1a2.3 2.3 0 0 0 0-4.6H13Z"/><path d="M18 12.4h-1.6V17M16.4 14.6H18"/></symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m2 0-.8 12.1a2 2 0 0 1-2 1.9H8.8a2 2 0 0 1-2-1.9L6 7"/><path d="M10 11v6M14 11v6"/></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16" r="0.6" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5"/><circle cx="12" cy="8" r="0.6" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="icon-merge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="9" rx="1"/><rect x="14" y="4" width="7" height="9" rx="1"/><path d="M12 17v3M9 20h6"/><path d="M8 13v1a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-1"/></symbol>
+    <symbol id="icon-split" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="3" width="7" height="9" rx="1"/><path d="M12 12v2"/><path d="M6 20h5v-4a2 2 0 0 0-2-2H7"/><path d="M18 20h-5v-4a2 2 0 0 1 2-2h2"/></symbol>
+    <symbol id="icon-rotate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3 6.2"/><path d="M3 15v-3h3"/></symbol>
+    <symbol id="icon-rotate-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 0-3 6.2"/><path d="M21 15v-3h-3"/></symbol>
+    <symbol id="icon-rotate-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3 6.2"/><path d="M3 15v-3h3"/></symbol>
+    <symbol id="icon-compress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v4a1 1 0 0 1-1 1H4M15 4v4a1 1 0 0 0 1 1h4M9 20v-4a1 1 0 0 0-1-1H4M15 20v-4a1 1 0 0 1 1-1h4"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="icon-unlock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 7.5-2"/><circle cx="12" cy="15.5" r="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="icon-pages-delete" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="11" height="14" rx="1"/><path d="M9 7h3M9 10h3"/><circle cx="17" cy="17" r="5"/><path d="m15.3 15.3 3.4 3.4M18.7 15.3l-3.4 3.4"/></symbol>
+    <symbol id="icon-pages-reorder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="10" height="13" rx="1"/><rect x="10" y="8" width="10" height="13" rx="1"/><path d="M8 21h.01"/></symbol>
+    <symbol id="icon-pages-extract" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="10" height="13" rx="1"/><path d="M8 8h4M8 11h4"/><path d="M15 14h5M17 11l3 3-3 3"/></symbol>
+    <symbol id="icon-doc-word" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v4h4"/><path d="m8 12 1.3 6L11 14l1.7 4L14 12"/></symbol>
+    <symbol id="icon-doc-excel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v4h4"/><path d="m8.2 12 5.6 6M13.8 12l-5.6 6"/></symbol>
+    <symbol id="icon-doc-ppt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v4h4"/><path d="M9 18v-6h2.2a2 2 0 0 1 0 4H9"/></symbol>
+    <symbol id="icon-arrow-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h11l-3-3M17 17H6l3 3"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============== Header ============== -->
+<header class="site-header">
+  <div class="wrap">
+    <button class="brand" id="brand-home">
+      <img src="assets/lllLogo.svg" alt="LLL" />
+      <span class="brand-name" data-i18n="nav.brand">LLL PDF Toolkit</span>
+    </button>
+    <div class="header-controls">
+      <div class="lang-switch">
+        <select id="lang-select" aria-label="Language">
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="zh">简体中文</option>
+        </select>
+      </div>
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+        <svg id="theme-icon-sun"><use href="#icon-sun"/></svg>
+        <svg id="theme-icon-moon"><use href="#icon-moon"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ============== Home view ============== -->
+  <div id="home-view">
+    <section class="hero">
+      <div class="wrap">
+        <span class="hero-badge" data-i18n="hero.badge">13 free PDF tools, right in your browser</span>
+        <h1><span data-i18n="hero.title.1">Every PDF tool you need,</span><br /><span data-i18n="hero.title.2">in one place</span></h1>
+        <p data-i18n="hero.subtitle">Merge, split, compress, convert and protect your PDFs.</p>
+      </div>
+    </section>
+
+    <section class="tools-section">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2 data-i18n="tools.heading">Choose a tool</h2>
+          <p data-i18n="tools.subheading">Click a card to get started</p>
+        </div>
+        <div class="tool-grid">
+          <div class="tool-card" data-tool="merge" data-group="pdf" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-merge"/></svg></span>
+            <h3 data-i18n="tool.merge.title">Merge PDF</h3>
+            <p data-i18n="tool.merge.desc">Combine multiple PDFs into a single file</p>
+          </div>
+          <div class="tool-card" data-tool="split" data-group="pdf" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-split"/></svg></span>
+            <h3 data-i18n="tool.split.title">Split PDF</h3>
+            <p data-i18n="tool.split.desc">Break a PDF into several smaller files</p>
+          </div>
+          <div class="tool-card" data-tool="rotate" data-group="pdf" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-rotate"/></svg></span>
+            <h3 data-i18n="tool.rotate.title">Rotate PDF</h3>
+            <p data-i18n="tool.rotate.desc">Rotate one or every page in a document</p>
+          </div>
+          <div class="tool-card" data-tool="compress" data-group="pdf" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-compress"/></svg></span>
+            <h3 data-i18n="tool.compress.title">Compress PDF</h3>
+            <p data-i18n="tool.compress.desc">Shrink file size while keeping quality</p>
+          </div>
+          <div class="tool-card" data-tool="lock" data-group="pdf" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-lock"/></svg></span>
+            <h3 data-i18n="tool.lock.title">Lock PDF</h3>
+            <p data-i18n="tool.lock.desc">Protect a PDF with a password</p>
+          </div>
+          <div class="tool-card" data-tool="unlock" data-group="pdf" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-unlock"/></svg></span>
+            <h3 data-i18n="tool.unlock.title">Unlock PDF</h3>
+            <p data-i18n="tool.unlock.desc">Remove password protection from a PDF</p>
+          </div>
+          <div class="tool-card" data-tool="delete" data-group="pdf" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-pages-delete"/></svg></span>
+            <h3 data-i18n="tool.delete.title">Delete pages</h3>
+            <p data-i18n="tool.delete.desc">Remove unwanted pages from a PDF</p>
+          </div>
+          <div class="tool-card" data-tool="rearrange" data-group="pdf" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-pages-reorder"/></svg></span>
+            <h3 data-i18n="tool.rearrange.title">Rearrange pages</h3>
+            <p data-i18n="tool.rearrange.desc">Drag and drop to reorder pages</p>
+          </div>
+          <div class="tool-card" data-tool="extract" data-group="pdf" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-pages-extract"/></svg></span>
+            <h3 data-i18n="tool.extract.title">Extract pages</h3>
+            <p data-i18n="tool.extract.desc">Pull selected pages into a new PDF</p>
+          </div>
+          <div class="tool-card" data-tool="pdf2word" data-group="office" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-doc-word"/></svg></span>
+            <h3 data-i18n="tool.pdf2word.title">PDF to Word</h3>
+            <p data-i18n="tool.pdf2word.desc">Convert a PDF's text into a .docx file</p>
+          </div>
+          <div class="tool-card" data-tool="word2pdf" data-group="office" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-file-pdf"/></svg></span>
+            <h3 data-i18n="tool.word2pdf.title">Word to PDF</h3>
+            <p data-i18n="tool.word2pdf.desc">Convert a .docx document into a PDF</p>
+          </div>
+          <div class="tool-card" data-tool="excel2pdf" data-group="office" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-doc-excel"/></svg></span>
+            <h3 data-i18n="tool.excel2pdf.title">Excel to PDF</h3>
+            <p data-i18n="tool.excel2pdf.desc">Convert spreadsheets into a PDF</p>
+          </div>
+          <div class="tool-card" data-tool="ppt2pdf" data-group="office" tabindex="0" role="button">
+            <span class="tool-icon"><svg><use href="#icon-doc-ppt"/></svg></span>
+            <h3 data-i18n="tool.ppt2pdf.title">PowerPoint to PDF</h3>
+            <p data-i18n="tool.ppt2pdf.desc">Convert slide text into a PDF</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============== Workspace view ============== -->
+  <div id="workspace-view" class="workspace hidden">
+    <div class="wrap">
+
+      <!-- ---------- Merge ---------- -->
+      <section class="tool-panel" id="panel-merge" data-tool="merge">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="merge.title">Merge PDF</h2>
+              <p data-i18n="merge.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="merge-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdf"></div>
+          </div>
+          <input type="file" id="merge-input" class="hidden" accept="application/pdf,.pdf" multiple />
+          <ul class="file-list" id="merge-file-list"></ul>
+          <p class="hint hidden" id="merge-reorder-hint" data-i18n="merge.reorderHint"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="merge-action" disabled>
+              <svg><use href="#icon-merge"/></svg><span data-i18n="merge.action">Merge PDFs</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="common.privacyNotice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Split ---------- -->
+      <section class="tool-panel" id="panel-split" data-tool="split">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="split.title">Split PDF</h2>
+              <p data-i18n="split.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="split-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdfSingle"></div>
+          </div>
+          <input type="file" id="split-input" class="hidden" accept="application/pdf,.pdf" />
+          <ul class="file-list" id="split-file-list"></ul>
+
+          <div class="option-group">
+            <label data-i18n="split.mode.label">Split method</label>
+            <div class="radio-row">
+              <label><input type="radio" name="split-mode" value="ranges" checked /><span data-i18n="split.mode.ranges"></span></label>
+              <label><input type="radio" name="split-mode" value="every" /><span data-i18n="split.mode.every"></span></label>
+              <label><input type="radio" name="split-mode" value="single" /><span data-i18n="split.mode.single"></span></label>
+            </div>
+          </div>
+          <div class="option-group" id="split-ranges-group">
+            <label data-i18n="split.ranges.label">Page ranges</label>
+            <input type="text" class="text-input" id="split-ranges-input" data-i18n-placeholder="split.ranges.placeholder" />
+          </div>
+          <div class="option-group hidden" id="split-every-group">
+            <label data-i18n="split.every.label">Pages per file</label>
+            <input type="number" class="text-input" id="split-every-input" min="1" value="1" />
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="split-action" disabled>
+              <svg><use href="#icon-split"/></svg><span data-i18n="split.action">Split PDF</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.downloadZip">Download .zip</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="common.privacyNotice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Rotate ---------- -->
+      <section class="tool-panel" id="panel-rotate" data-tool="rotate">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="rotate.title">Rotate PDF</h2>
+              <p data-i18n="rotate.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="rotate-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdfSingle"></div>
+          </div>
+          <input type="file" id="rotate-input" class="hidden" accept="application/pdf,.pdf" />
+
+          <div class="page-grid-toolbar hidden" id="rotate-toolbar">
+            <span class="hint" data-i18n="rotate.hint"></span>
+            <div class="btn-row" style="margin-top:0">
+              <button class="btn btn-ghost" id="rotate-all-left"><svg><use href="#icon-rotate-left"/></svg><span data-i18n="rotate.rotateAllLeft"></span></button>
+              <button class="btn btn-ghost" id="rotate-all-right"><svg><use href="#icon-rotate-right"/></svg><span data-i18n="rotate.rotateAllRight"></span></button>
+            </div>
+          </div>
+          <div class="page-grid" id="rotate-grid"></div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary hidden" id="rotate-action">
+              <svg><use href="#icon-check"/></svg><span data-i18n="rotate.action">Save rotated PDF</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="common.privacyNotice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Compress ---------- -->
+      <section class="tool-panel" id="panel-compress" data-tool="compress">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="compress.title">Compress PDF</h2>
+              <p data-i18n="compress.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="compress-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdfSingle"></div>
+          </div>
+          <input type="file" id="compress-input" class="hidden" accept="application/pdf,.pdf" />
+          <ul class="file-list" id="compress-file-list"></ul>
+
+          <div class="option-group">
+            <label data-i18n="compress.level.label">Compression level</label>
+            <div class="radio-row">
+              <label><input type="radio" name="compress-level" value="low" /><span data-i18n="compress.level.low"></span></label>
+              <label><input type="radio" name="compress-level" value="medium" checked /><span data-i18n="compress.level.medium"></span></label>
+              <label><input type="radio" name="compress-level" value="high" /><span data-i18n="compress.level.high"></span></label>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="compress-action" disabled>
+              <svg><use href="#icon-compress"/></svg><span data-i18n="compress.action">Compress PDF</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="common.privacyNotice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Lock ---------- -->
+      <section class="tool-panel" id="panel-lock" data-tool="lock">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="lock.title">Lock PDF</h2>
+              <p data-i18n="lock.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="lock-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdfSingle"></div>
+          </div>
+          <input type="file" id="lock-input" class="hidden" accept="application/pdf,.pdf" />
+          <ul class="file-list" id="lock-file-list"></ul>
+
+          <div class="option-group">
+            <label for="lock-password" data-i18n="lock.password.label">Password</label>
+            <input type="password" class="text-input" id="lock-password" autocomplete="new-password" data-i18n-placeholder="lock.password.placeholder" />
+          </div>
+          <div class="option-group">
+            <label for="lock-confirm" data-i18n="lock.confirm.label">Confirm password</label>
+            <input type="password" class="text-input" id="lock-confirm" autocomplete="new-password" data-i18n-placeholder="lock.confirm.placeholder" />
+          </div>
+          <div class="option-group">
+            <label data-i18n="lock.permissions.label">Permissions</label>
+            <div class="radio-row">
+              <label class="checkbox-row" style="border:1px solid var(--border);border-radius:999px;padding:8px 14px;"><input type="checkbox" id="lock-perm-printing" checked /><span data-i18n="lock.permissions.printing"></span></label>
+              <label class="checkbox-row" style="border:1px solid var(--border);border-radius:999px;padding:8px 14px;"><input type="checkbox" id="lock-perm-copying" checked /><span data-i18n="lock.permissions.copying"></span></label>
+              <label class="checkbox-row" style="border:1px solid var(--border);border-radius:999px;padding:8px 14px;"><input type="checkbox" id="lock-perm-modifying" /><span data-i18n="lock.permissions.modifying"></span></label>
+              <label class="checkbox-row" style="border:1px solid var(--border);border-radius:999px;padding:8px 14px;"><input type="checkbox" id="lock-perm-annotating" checked /><span data-i18n="lock.permissions.annotating"></span></label>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="lock-action" disabled>
+              <svg><use href="#icon-lock"/></svg><span data-i18n="lock.action">Lock PDF</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="common.privacyNotice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Unlock ---------- -->
+      <section class="tool-panel" id="panel-unlock" data-tool="unlock">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="unlock.title">Unlock PDF</h2>
+              <p data-i18n="unlock.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="unlock-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdfSingle"></div>
+          </div>
+          <input type="file" id="unlock-input" class="hidden" accept="application/pdf,.pdf" />
+          <ul class="file-list" id="unlock-file-list"></ul>
+
+          <div class="option-group">
+            <label for="unlock-password" data-i18n="unlock.password.label">Current password</label>
+            <input type="password" class="text-input" id="unlock-password" autocomplete="current-password" data-i18n-placeholder="unlock.password.placeholder" />
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="unlock-action" disabled>
+              <svg><use href="#icon-unlock"/></svg><span data-i18n="unlock.action">Unlock PDF</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="common.privacyNotice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Delete pages ---------- -->
+      <section class="tool-panel" id="panel-delete" data-tool="delete">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="delete.title">Delete pages</h2>
+              <p data-i18n="delete.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="delete-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdfSingle"></div>
+          </div>
+          <input type="file" id="delete-input" class="hidden" accept="application/pdf,.pdf" />
+
+          <div class="page-grid-toolbar hidden" id="delete-toolbar">
+            <span class="hint" data-i18n="delete.hint"></span>
+            <span class="hint"><span id="delete-count">0</span> <span data-i18n="delete.selectedCount"></span></span>
+          </div>
+          <div class="page-grid" id="delete-grid"></div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary hidden" id="delete-action">
+              <svg><use href="#icon-trash"/></svg><span data-i18n="delete.action">Delete marked pages</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="common.privacyNotice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Rearrange pages ---------- -->
+      <section class="tool-panel" id="panel-rearrange" data-tool="rearrange">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="rearrange.title">Rearrange pages</h2>
+              <p data-i18n="rearrange.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="rearrange-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdfSingle"></div>
+          </div>
+          <input type="file" id="rearrange-input" class="hidden" accept="application/pdf,.pdf" />
+
+          <div class="page-grid-toolbar hidden" id="rearrange-toolbar">
+            <span class="hint" data-i18n="rearrange.hint"></span>
+          </div>
+          <div class="page-grid" id="rearrange-grid"></div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary hidden" id="rearrange-action">
+              <svg><use href="#icon-check"/></svg><span data-i18n="rearrange.action">Save new order</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="common.privacyNotice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Extract pages ---------- -->
+      <section class="tool-panel" id="panel-extract" data-tool="extract">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="extract.title">Extract pages</h2>
+              <p data-i18n="extract.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="extract-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdfSingle"></div>
+          </div>
+          <input type="file" id="extract-input" class="hidden" accept="application/pdf,.pdf" />
+
+          <div class="page-grid-toolbar hidden" id="extract-toolbar">
+            <span class="hint"><span id="extract-count">0</span> <span data-i18n="extract.selectedCount"></span></span>
+            <div>
+              <button class="link-btn" id="extract-select-all" data-i18n="extract.selectAll"></button>
+              &nbsp;·&nbsp;
+              <button class="link-btn" id="extract-clear" data-i18n="extract.clear"></button>
+            </div>
+          </div>
+          <div class="page-grid" id="extract-grid"></div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary hidden" id="extract-action">
+              <svg><use href="#icon-pages-extract"/></svg><span data-i18n="extract.action">Extract selected pages</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="common.privacyNotice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- PDF to Word ---------- -->
+      <section class="tool-panel" id="panel-pdf2word" data-tool="pdf2word">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="pdf2word.title">PDF to Word</h2>
+              <p data-i18n="pdf2word.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="pdf2word-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePdfSingle"></div>
+          </div>
+          <input type="file" id="pdf2word-input" class="hidden" accept="application/pdf,.pdf" />
+          <ul class="file-list" id="pdf2word-file-list"></ul>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="pdf2word-action" disabled>
+              <svg><use href="#icon-arrow-swap"/></svg><span data-i18n="pdf2word.action">Convert to Word</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="pdf2word.notice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Word to PDF ---------- -->
+      <section class="tool-panel" id="panel-word2pdf" data-tool="word2pdf">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="word2pdf.title">Word to PDF</h2>
+              <p data-i18n="word2pdf.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="word2pdf-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHereDocx"></div>
+          </div>
+          <input type="file" id="word2pdf-input" class="hidden" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+          <ul class="file-list" id="word2pdf-file-list"></ul>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="word2pdf-action" disabled>
+              <svg><use href="#icon-arrow-swap"/></svg><span data-i18n="word2pdf.action">Convert to PDF</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="word2pdf.notice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- Excel to PDF ---------- -->
+      <section class="tool-panel" id="panel-excel2pdf" data-tool="excel2pdf">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="excel2pdf.title">Excel to PDF</h2>
+              <p data-i18n="excel2pdf.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="excel2pdf-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHereXlsx"></div>
+          </div>
+          <input type="file" id="excel2pdf-input" class="hidden" accept=".xlsx,.xls,.csv" />
+          <ul class="file-list" id="excel2pdf-file-list"></ul>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="excel2pdf-action" disabled>
+              <svg><use href="#icon-arrow-swap"/></svg><span data-i18n="excel2pdf.action">Convert to PDF</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="excel2pdf.notice"></span></div>
+        </div>
+      </section>
+
+      <!-- ---------- PPT to PDF ---------- -->
+      <section class="tool-panel" id="panel-ppt2pdf" data-tool="ppt2pdf">
+        <div class="workspace-panel">
+          <div class="workspace-head">
+            <button class="back-btn" data-i18n-aria-label="common.back"><svg><use href="#icon-chevron-left"/></svg></button>
+            <div>
+              <h2 data-i18n="ppt2pdf.title">PowerPoint to PDF</h2>
+              <p data-i18n="ppt2pdf.subtitle"></p>
+            </div>
+          </div>
+          <div class="dropzone" id="ppt2pdf-dropzone" tabindex="0">
+            <svg><use href="#icon-upload-cloud"/></svg>
+            <strong data-i18n="common.chooseFiles"></strong>
+            <span data-i18n="common.orDrop"></span>
+            <div class="hint" data-i18n="common.dropHerePptx"></div>
+          </div>
+          <input type="file" id="ppt2pdf-input" class="hidden" accept=".pptx" />
+          <ul class="file-list" id="ppt2pdf-file-list"></ul>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="ppt2pdf-action" disabled>
+              <svg><use href="#icon-arrow-swap"/></svg><span data-i18n="ppt2pdf.action">Convert to PDF</span>
+            </button>
+          </div>
+          <div class="progress-wrap hidden"><div class="progress-bar"><div></div></div><div class="progress-label"></div></div>
+          <div class="error-box hidden"><svg><use href="#icon-alert"/></svg><span class="error-text"></span></div>
+          <div class="result-box hidden">
+            <span class="result-icon"><svg><use href="#icon-check"/></svg></span>
+            <span class="result-text"><strong class="result-title"></strong><span class="result-desc"></span></span>
+            <button class="btn btn-primary result-download"><svg><use href="#icon-download"/></svg><span class="dl-label" data-i18n="common.download">Download</span></button>
+          </div>
+          <div class="notice"><svg><use href="#icon-info"/></svg><span data-i18n="ppt2pdf.notice"></span></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <img src="assets/lllLogo.svg" alt="LLL" />
+    <div data-i18n="footer.tagline">Free, private PDF tools that run entirely in your browser.</div>
+    <div data-i18n="footer.rights">All processing happens locally. No files ever leave your device.</div>
+  </div>
+</footer>
+
+<div id="render-sandbox" class="render-sandbox" aria-hidden="true"></div>
+
+<!-- ============== Vendor libraries ============== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://unpkg.com/@cantoo/pdf-lib@2.2.4/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://unpkg.com/mammoth@1.7.2/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- ============== App scripts ============== -->
+<script src="js/i18n.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/app.js"></script>
+<script src="js/tools/merge.js"></script>
+<script src="js/tools/split.js"></script>
+<script src="js/tools/rotate.js"></script>
+<script src="js/tools/compress.js"></script>
+<script src="js/tools/lock.js"></script>
+<script src="js/tools/unlock.js"></script>
+<script src="js/tools/delete-pages.js"></script>
+<script src="js/tools/rearrange.js"></script>
+<script src="js/tools/extract.js"></script>
+<script src="js/tools/pdf-to-word.js"></script>
+<script src="js/tools/word-to-pdf.js"></script>
+<script src="js/tools/excel-to-pdf.js"></script>
+<script src="js/tools/ppt-to-pdf.js"></script>
+<script>
+  document.getElementById("brand-home").addEventListener("click", () => window.App.showGrid());
+</script>
+</body>
+</html>
