@@ -2,10 +2,6 @@
 (function () {
   "use strict";
 
-  if (window.pdfjsLib) {
-    window.pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-  }
 
   const home = document.getElementById("home-view");
   const workspace = document.getElementById("workspace-view");
@@ -214,7 +210,8 @@
   async function renderPdfThumbnails(arrayBuffer, gridEl, options) {
     options = options || {};
     gridEl.innerHTML = "";
-    const loadingTask = window.pdfjsLib.getDocument({ data: arrayBuffer.slice(0) });
+    const pdfjsLib = await window.loadPdfJs();
+    const loadingTask = pdfjsLib.getDocument({ ...window.pdfjsDocumentOptions, data: arrayBuffer.slice(0), isEvalSupported: false });
     const pdf = await loadingTask.promise;
     const thumbs = [];
     for (let i = 1; i <= pdf.numPages; i++) {
@@ -247,7 +244,7 @@
       gridEl.appendChild(item);
       thumbs.push({ index: i - 1, canvas, el: item, rotation: 0 });
     }
-    pdf.destroy();
+    await loadingTask.destroy();
     return thumbs;
   }
 
@@ -331,10 +328,14 @@
   function renderHtmlToPdfBytes(innerHtml) {
     return new Promise((resolve, reject) => {
       const sandbox = document.getElementById("render-sandbox");
-      sandbox.innerHTML = innerHtml;
+      const renderRoot = document.createElement("div");
+      renderRoot.style.width = "794px";
+      renderRoot.innerHTML = window.DOMPurify.sanitize(innerHtml, { USE_PROFILES: { html: true } });
+      sandbox.replaceChildren(renderRoot);
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF({ unit: "pt", format: "a4" });
-      pdf.html(sandbox, {
+      // Clone the content, excluding the sandbox's fixed offscreen positioning.
+      pdf.html(renderRoot, {
         x: 0,
         y: 0,
         width: 595,

@@ -1,0 +1,21 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const {JSDOM}=await import(process.env.JSDOM_MODULE || 'jsdom');
+const app=readFileSync(new URL('../js/app.js',import.meta.url),'utf8');
+const start=app.indexOf('  function renderHtmlToPdfBytes('),end=app.indexOf('  /**',start+10);
+const renderer=app.slice(start,end);
+test('document HTML is sanitized before insertion while tables and inline formatting survive',async()=>{
+ const dom=new JSDOM('<div id="render-sandbox"></div>',{runScripts:'outside-only'}),w=dom.window;
+ w.eval(readFileSync(new URL('../vendor/purify.min.js',import.meta.url),'utf8'));
+ let rendered;
+ w.jspdf={jsPDF:class {html(element,options){rendered=element.cloneNode(true);options.callback(this);}output(){return new ArrayBuffer(8);}}};
+ w.eval(renderer+'; window.renderDocument=renderHtmlToPdfBytes;');
+ const bytes=await w.renderDocument('<h1>Title</h1><p style="color:blue">Hello <strong>world</strong></p><table><tr><td>Cell</td></tr></table><img src=x onerror="window.pwned=1"><a href="javascript:window.pwned=2">Link</a>');
+ assert.equal(rendered.querySelector('img').hasAttribute('onerror'),false);
+ assert.equal(rendered.querySelector('a').hasAttribute('href'),false);
+ assert.equal(rendered.querySelector('td').textContent,'Cell');
+ assert.equal(rendered.querySelector('strong').textContent,'world');
+ assert.equal(rendered.querySelector('p').style.color,'blue');
+ assert.equal(bytes.byteLength,8);dom.window.close();
+});
