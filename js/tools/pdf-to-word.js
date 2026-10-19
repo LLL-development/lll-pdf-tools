@@ -29,7 +29,9 @@
   });
 
   async function extractPageLines(arrayBuffer) {
-    const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
+    const pdfjsLib = await window.loadPdfJs();
+    const loadingTask = pdfjsLib.getDocument({ ...window.pdfjsDocumentOptions, data: arrayBuffer.slice(0), isEvalSupported: false });
+    const pdf = await loadingTask.promise;
     const pages = [];
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
@@ -63,7 +65,7 @@
       );
       pages.push(pageLines.filter((l) => l.length));
     }
-    pdf.destroy();
+    await loadingTask.destroy();
     return pages;
   }
 
