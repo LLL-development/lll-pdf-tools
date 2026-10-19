@@ -1,0 +1,38 @@
+[
+  {
+    "name": "jszip",
+    "version": "3.10.1",
+    "entry": "dist/jszip.min.js",
+    "url": "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js",
+    "tarball": "https://registry.npmjs.org/jszip/-/jszip-3.10.1.tgz",
+    "tarball_integrity": "sha512-xXDvecyTpGLrqFrvkrUSoxxfJI5AH7U8zxxtVclpsUtMCq4JQ290LY8AW5c7Ggnr/Y/oK+bQMbqK2qmtk3pN4g==",
+    "gitHead": "0f2f1e4d0509514417db83fe5b86bde90e0ffe8d",
+    "license": "(MIT OR GPL-3.0-or-later)",
+    "exactOfficialByteMatch": true,
+    "sri": "sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg=="
+  },
+  {
+    "name": "@cantoo/pdf-lib",
+    "version": "2.2.4",
+    "entry": "dist/pdf-lib.min.js",
+    "url": "https://unpkg.com/@cantoo/pdf-lib@2.2.4/dist/pdf-lib.min.js",
+    "tarball": "https://registry.npmjs.org/@cantoo/pdf-lib/-/pdf-lib-2.2.4.tgz",
+    "tarball_integrity": "sha512-69bECXjl0QVMrBTEsPZDPFmhoyLGwXKiJI5JWPgBnAx0kS5+7v76rNCeYMTbDmZaPgvdIViMvTaz2HVCe8u1fw==",
+    "gitHead": "7f1acac01f76cee40c53f07b0cbab577c5f7bdbb",
+    "license": "MIT",
+    "exactOfficialByteMatch": true,
+    "sri": "sha512-9FbP2JMgj/nwNMtnhQsNyXMaE1eRFeqRGRHzZpQbyr3Ol6te36o/7TkA4CbEhz3KyeORn4S63lKOWQDPfxaiJQ=="
+  },
+  {
+    "name": "html2canvas",
+    "version": "1.4.1",
+    "entry": "dist/html2canvas.min.js",
+    "url": "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
+    "tarball": "https://registry.npmjs.org/html2canvas/-/html2canvas-1.4.1.tgz",
+    "tarball_integrity": "sha512-fPU6BHNpsyIhr8yyMpTLLxAbkaK8ArIBcmZIRiBLiDhjeqvXolaEmDGmELFuX9I4xDcaKKcJl+TKZLqruBbmWA==",
+    "gitHead": null,
+    "license": "MIT",
+    "exactOfficialByteMatch": true,
+    "sri": "sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+  }
+]
